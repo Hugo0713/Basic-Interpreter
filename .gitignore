@@ -1,0 +1,11 @@
+**/*.o
+**/*.a
+*.log
+score
+.idea/
+.vscode/
+cmake-build-debug/
+Test/
+*.pdf
+Basic-Demo-64Bit
+/score.cpp
