@@ -58,29 +58,12 @@ void processLine(std::string line, Program &program, EvalState &state) {
     scanner.setInput(line);
     
     std::string token1 = scanner.nextToken();
-    // bool flag_num = true;
-    // for(char ch : token1)
-    // {
-    //     if(!isdigit(ch))
-    //     {
-    //         flag_num = false;
-    //         break;
-    //     }
-    // }
-    // if(flag_num)
-    // {
-    //     int linenumber = stoi(token1);
-    //     program.addSourceLine(linenumber, line);
-    //     return;
-    // }
-
     if(scanner.getTokenType(token1) == NUMBER)
     {
         program.addSourceLine(stoi(token1), line);
         return;
     }
 
-    
     if(token1 == "QUIT")
     {
         program.clear();
@@ -93,11 +76,6 @@ void processLine(std::string line, Program &program, EvalState &state) {
     }
     if(token1 == "LET")
     {
-                // std::string left_value = scanner.nextToken();
-                // Expression *right_value = readE(scanner);
-                // state.setValue(left_value, right_value->eval(state));
-                // delete right_value;
-                // break;
         LetStmt temp("pre " + line);
         temp.execute(state, program);       
     }
@@ -119,13 +97,6 @@ void processLine(std::string line, Program &program, EvalState &state) {
     }
     if(token1 == "INPUT")
     {
-            // std::cout << " ? ";
-            // int value;
-            // std::cin >> value;
-            // std::string var;
-            // var = scanner.nextToken();
-            // var = scanner.nextToken();
-            // state.setValue(var, value);
         InputStmt temp("pre " + line);
         temp.execute(state, program);
     }

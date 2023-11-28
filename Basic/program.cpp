@@ -31,19 +31,7 @@ void Program::clear()
 }
 
 void Program::addSourceLine(int lineNumber, const std::string &line) 
-{
-    // if(lines.find(lineNumber) == lines.end())
-    // {
-    //     lines.insert(lineNumber);
-    //     sourceLine[lineNumber] = line;
-    // }
-    // else
-    // {
-    //     sourceLine[lineNumber] = line;
-    //     delete pr[lineNumber];
-    //     pr.erase(lineNumber);
-    // }
-    
+{   
     TokenScanner scanner(line);
     scanner.ignoreWhitespace();
     std::string token = scanner.nextToken();
@@ -121,28 +109,8 @@ std::string Program::getSourceLine(int lineNumber)
 
 void Program::setParsedStatement(int lineNumber, Statement *stmt) 
 {
-    // if(lines.find(lineNumber) != lines.end())
-    // {
-    //     if(pr[lineNumber] == nullptr)
-    //     {
-    //         pr[lineNumber] = stmt;
-    //     }
-    //     else
-    //     {
-    //         delete pr[lineNumber];
-    //         pr[lineNumber] = stmt;
-    //     }
-    // }
-    // else
-    // {
-    //     throw "error";
-    // }
     if(lines.find(lineNumber) != lines.end())
     {
-        // if(pr[lineNumber] != nullptr)
-        // {
-        //     delete pr[lineNumber];
-        // }
         pr[lineNumber] = stmt;
     }
     else
@@ -175,7 +143,6 @@ int Program::getFirstLineNumber()
     {
         return *(lines.begin());
     }
-    
 }
 
 int Program::getNextLineNumber(int lineNumber) 
@@ -194,18 +161,10 @@ int Program::getNextLineNumber(int lineNumber)
 
 void Program::list()
 {
-    // for(int i = 0; i < lines.size(); ++i)
-    // {
-    //     auto it = lines.begin();
-    //     int lineNumber = *it;
-    //     std::cout <<  sourceLine[lineNumber] << "\n";
-    //     ++it;
-    // }
     for (int lineNumber : lines) 
     {
        std::cout << sourceLine[lineNumber] << "\n";
     }
-
 }
 
 void Program::run(EvalState &state)
@@ -214,7 +173,7 @@ void Program::run(EvalState &state)
     while(runLine != -1 && runLine <= *(lines.rbegin()))
     {
         int now = runLine;
-        //if(pr[runLine] != nullptr)
+        //if(pr[runLine] != nullptr)为什么会出现空指针？
         if(pr.count(runLine) > 0)
         {
             pr[runLine]->execute(state, *this);

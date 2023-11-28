@@ -28,7 +28,7 @@ PrintStmt::PrintStmt(std::string str)
     std::string token = scanner.nextToken();
     token = scanner.nextToken();
     token = scanner.nextToken();
-    scanner.setInput(token);//?
+    scanner.setInput(token);
     exp = readE(scanner); 
 }
 
@@ -55,7 +55,6 @@ InputStmt::InputStmt(std::string str)
 
 void InputStmt::execute(EvalState &state, Program &program)
 {
-    //int value;
     std::cout << " ? ";
     std::string str1;
 
@@ -69,7 +68,7 @@ void InputStmt::execute(EvalState &state, Program &program)
         std::getline(std::cin, str1);
         for(int i = 0; i < str1.size(); ++i) 
         {
-            if(!(((str1[i] >= '0') && (str1[i] <= '9'))||((str1[i] == '-')&&(i==0)))) 
+            if(!(((str1[i] >= '0') && (str1[i] <= '9')) || ((str1[i] == '-') && (i == 0)))) 
             {
                 flag_num = false;
                 std::cout << "INVALID NUMBER" << '\n';
@@ -77,34 +76,6 @@ void InputStmt::execute(EvalState &state, Program &program)
                 break;
             }
         }
-
-        // if(scanner1.getTokenType(str1) != NUMBER)
-        // {
-        //     std::cout << "INVALID NUMBER" << '\n';
-        //     std::cout << " ? "; 
-        // }
-
-        // for (char ch : str1) 
-        // {
-        //     if(!std::isdigit(ch) && !(ch == '-' && (&ch == &str1[0]))) 
-        //     {
-        //         flag_num = false;
-        //         std::cout << "INVALID NUMBER" << '\n';
-        //         std::cout << " ? ";
-        //         break;
-        //     }
-        // }
-
-        // try 
-        // {
-        //     int num = std::stoi(str1);
-        // } 
-        // catch (const std::exception&) 
-        // {
-        //     flag_num = false;
-        //     std::cout << "INVALID NUMBER" << '\n';
-        //     std::cout << " ? ";
-        // }
 
         if(flag_num)
         {
@@ -115,7 +86,6 @@ void InputStmt::execute(EvalState &state, Program &program)
             exp1 = readE(scanner1);
         }
     }
-
     state.setValue(var, exp1->eval(state));
     delete exp1;
 }
@@ -128,7 +98,7 @@ LetStmt::LetStmt(std::string str)
     var = scanner.nextToken();
     var = scanner.nextToken();
     var = scanner.nextToken();
-    str = scanner.nextToken();//?
+    scanner.nextToken();
     right_value = readE(scanner);
 }
 
@@ -209,8 +179,7 @@ GotoStmt::GotoStmt(std::string str)
 {
     TokenScanner scanner(str);
     scanner.ignoreWhitespace();
-    //scanner.scanNumbers();
-
+    
     scanner.nextToken();
     scanner.nextToken();
     lineNumber = stoi(scanner.nextToken());
