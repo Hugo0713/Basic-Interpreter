@@ -85,4 +85,74 @@ public:
  * specify its own destructor method to free that memory.
  */
 
+class PrintStmt : public Statement
+{
+    private:
+    Expression *exp;
+
+    public:
+    PrintStmt(std::string);
+    virtual ~PrintStmt();
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+class InputStmt : public Statement
+{
+    private:
+    std::string var;
+
+    public:
+    InputStmt(std::string);
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+class LetStmt : public Statement
+{
+    private:
+    std::string var;
+    Expression *right_value;
+
+    public:
+    LetStmt(std::string);
+    virtual ~LetStmt();
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+class RemStmt : public Statement
+{
+    public:
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+class IfStmt : public Statement
+{
+    private:
+    Expression *exp1;
+    Expression *exp2;
+    std::string cmp;
+    int lineNumber;
+
+    public:
+    IfStmt(std::string str);
+    virtual ~IfStmt();
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+class GotoStmt : public Statement
+{
+    private:
+    int lineNumber;
+
+    public:
+    GotoStmt(std::string str);
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+class EndStmt : public Statement
+{
+    public:
+    virtual void execute(EvalState &state, Program &program) override;
+};
+
+
 #endif

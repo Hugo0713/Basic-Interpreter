@@ -184,6 +184,7 @@ TokenType TokenScanner::getTokenType(std::string token) const {
     if (isspace(ch)) return SEPARATOR;
     if (ch == '"' || (ch == '\'' && token.length() > 1)) return STRING;
     if (isdigit(ch)) return NUMBER;
+    //if (isdigit(ch) || (ch == '-' && token.length() > 1 && isdigit(token[1]))) return NUMBER;
     if (isWordCharacter(ch)) return WORD;
     return OPERATOR;
 };

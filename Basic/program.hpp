@@ -140,11 +140,22 @@ public:
 
     int getNextLineNumber(int lineNumber);
 
+    void list();
+
+    void run(EvalState &state);
+
     //more func to add
     //todo
+    int runLine;
+
+    //friend void GotoStmt::execute(EvalState &state, Program &program);
+    friend class GotoStmt;
 
 private:
-
+    
+    std::set<int> lines;
+    std::unordered_map<int, std::string> sourceLine;
+    std::unordered_map<int, Statement *> pr; //parsed representation
     // Fill this in with whatever types and instance variables you need
     //todo
 };

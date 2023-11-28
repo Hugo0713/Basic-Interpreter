@@ -16,7 +16,7 @@
 
 
 /* Function prototypes */
-
+Expression *exp0 = nullptr;
 void processLine(std::string line, Program &program, EvalState &state);
 
 /* Main program */
@@ -56,7 +56,78 @@ void processLine(std::string line, Program &program, EvalState &state) {
     scanner.ignoreWhitespace();
     scanner.scanNumbers();
     scanner.setInput(line);
+    
+    std::string token1 = scanner.nextToken();
+    // bool flag_num = true;
+    // for(char ch : token1)
+    // {
+    //     if(!isdigit(ch))
+    //     {
+    //         flag_num = false;
+    //         break;
+    //     }
+    // }
+    // if(flag_num)
+    // {
+    //     int linenumber = stoi(token1);
+    //     program.addSourceLine(linenumber, line);
+    //     return;
+    // }
 
-    //todo
+    if(scanner.getTokenType(token1) == NUMBER)
+    {
+        program.addSourceLine(stoi(token1), line);
+        return;
+    }
+
+    
+    if(token1 == "QUIT")
+    {
+        program.clear();
+        //state.Clear();
+        exit(0);
+    }   
+    if(token1 == "LIST")
+    {
+        program.list();
+    }
+    if(token1 == "LET")
+    {
+                // std::string left_value = scanner.nextToken();
+                // Expression *right_value = readE(scanner);
+                // state.setValue(left_value, right_value->eval(state));
+                // delete right_value;
+                // break;
+        LetStmt temp("pre " + line);
+        temp.execute(state, program);       
+    }
+    if(token1 == "CLEAR")
+    {
+        program.clear();
+        state.Clear();
+    }
+    if(token1 == "RUN")
+    {
+        program.run(state);
+    }
+    if(token1 == "PRINT")
+    {
+        //Expression *exp0 = nullptr;
+        exp0 = readE(scanner);
+        std::cout << exp0->eval(state) << "\n";
+        delete exp0;
+    }
+    if(token1 == "INPUT")
+    {
+            // std::cout << " ? ";
+            // int value;
+            // std::cin >> value;
+            // std::string var;
+            // var = scanner.nextToken();
+            // var = scanner.nextToken();
+            // state.setValue(var, value);
+        InputStmt temp("pre " + line);
+        temp.execute(state, program);
+    }
 }
 
